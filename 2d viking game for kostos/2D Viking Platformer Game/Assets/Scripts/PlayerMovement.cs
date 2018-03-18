@@ -8,6 +8,8 @@ public class PlayerMovement : MonoBehaviour {
 
     private bool isJumping;
 
+    public GameObject helpDotExe;
+    public GameObject spawn;
     Rigidbody2D MyRigid;
 
     public int Gold;
@@ -35,6 +37,11 @@ public class PlayerMovement : MonoBehaviour {
         {
             Fall();
         }
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            attack();
+        }
+
     }
 
     private void Fall()
@@ -59,12 +66,20 @@ public class PlayerMovement : MonoBehaviour {
         isJumping = false;
     }
 
+    void attack()
+    {
+        GameObject go = Instantiate(helpDotExe, spawn.transform.position, spawn.transform.rotation);
+        go.GetComponent<Rigidbody2D>().velocity = new Vector2(10, 0);
+        Destroy(go, 1.0f);
+    }
+
     void Flip()
     {
         Vector3 LocalScale = transform.localScale;
         LocalScale.x *= -1;
         transform.localScale = LocalScale;
     }
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
